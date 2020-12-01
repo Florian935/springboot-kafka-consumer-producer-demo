@@ -7,16 +7,16 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class KafkaProducer {
+public class KafkaAlertProducer implements Producer {
 
-    private static final Logger logger = LoggerFactory.getLogger(KafkaProducer.class);
-    private static final String TOPIC = "users";
+    private static final Logger logger = LoggerFactory.getLogger(KafkaMessageProducer.class);
+    private static final String TOPIC = "alerts";
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    public void produce(String message) {
-        logger.info(String.format("#### -> Producing message -> %s", message));
-        this.kafkaTemplate.send(TOPIC, message);
+    public void produce(String alert) {
+        logger.info(String.format("#### -> Producing alert -> %s", alert));
+        this.kafkaTemplate.send(TOPIC, alert);
     }
 }

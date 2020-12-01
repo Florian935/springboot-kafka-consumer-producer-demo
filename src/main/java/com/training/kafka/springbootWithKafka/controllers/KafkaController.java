@@ -1,6 +1,7 @@
 package com.training.kafka.springbootWithKafka.controllers;
 
-import com.training.kafka.springbootWithKafka.producer.KafkaProducer;
+import com.training.kafka.springbootWithKafka.producer.KafkaAlertProducer;
+import com.training.kafka.springbootWithKafka.producer.KafkaMessageProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,10 +10,18 @@ import org.springframework.web.bind.annotation.*;
 public class KafkaController {
 
     @Autowired
-    private KafkaProducer producer;
+    private KafkaMessageProducer kafkaMessageProducer;
 
-    @PostMapping("/publish")
+    @Autowired
+    private KafkaAlertProducer kafkaAlertProducer;
+
+    @PostMapping("/messages")
     public void sendMessageToKafkaTopic(@RequestParam("message") String message) {
-        producer.produce(message);
+        kafkaMessageProducer.produce(message);
+    }
+
+    @PostMapping("/alerts")
+    public void sendMessageToKafkaTopicUser(@RequestBody String alert) {
+        kafkaAlertProducer.produce(alert);
     }
 }
